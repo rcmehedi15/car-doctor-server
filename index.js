@@ -67,7 +67,6 @@ async function run() {
         })
         // bookings
 
-
         app.post('/bookings',async(req,res) => {
             const booking= req.body;
             console.log(booking);
@@ -75,6 +74,15 @@ async function run() {
             const result = await bookingCollection.insertOne(booking);
             res.send(result);
         })
+
+        // delete data 
+        app.delete('/bookings/:id', async(req,res) => {
+            const id = req.params.id;
+            const query = { id: new ObjectId(id)}
+            const result = await bookingCollection.deleteOne(query);
+            res.send(result);
+        })
+
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
